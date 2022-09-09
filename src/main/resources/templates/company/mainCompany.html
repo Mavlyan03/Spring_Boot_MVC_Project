@@ -12,7 +12,8 @@
         font-size: 25px;
     }
     body {
-        background-image: url("https://cdn.pixabay.com/photo/2017/03/15/13/27/rough-horn-2146181_960_720.jpg")
+        background-image: url("https://images.pexels.com/photos/691668/pexels-photo-691668.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+        background-size: cover;
     }
 
     thead,
@@ -26,19 +27,24 @@
             border: 1px solid #1e1818;
             padding: 3px;
         }
+      .add:hover {
+          background: darkcyan;
+      }
+      .sing-out:hover {
+          background: cornflowerblue;
+      }
     </style>
 </head>
 <body>
 
-<div>
+<div style="text-align: center">
     <div sec:authorize="isAuthenticated()">
-        Welcome <b><span sec:authentication="name"> Username </span> </b>
-        <i><span sec:authentication="principal.authorities">Roles</span> </i>
+        <a><span style="font-size: 25px; margin: auto" th:text="Welcome"></span></a>
+        <br>
+        <span style="margin: auto; font-size: 20px" sec:authentication="name"></span>
+        <br>
+        <span style="margin: auto; font-size: 20px" sec:authentication="principal.authorities"></span>
     </div>
-
-    <form th:action="@{/logout }" method="post">
-        <input type="submit" value="Logout">
-    </form>
 </div>
 <table class="table table-bordered">
     <thead class="table-dark">
@@ -77,13 +83,15 @@
             <input type="submit" value="student" style="height: 40px;width: 80px;background: mediumaquamarine">
         </a>
         </td>
-
-
     </tr>
     </tbody>
 </table>
 <br><br><br><br>
-<input style=" display: block; margin:auto; font-size:30px;" type="button" value="Add company"
+<input class="add" style=" display: block; margin:auto; font-size:30px;" type="button" value="Add company"
        onclick="window.location.href = 'new'">
+
+<form th:action="@{/logout }" method="post" style="text-align: center">
+    <input class="sing-out" type="submit" value="Sign out" style="font-size: 30px; margin:auto">
+    </form>
 </body>
 </html>

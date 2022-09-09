@@ -2,7 +2,8 @@ package com.example.spring_boot_mvc_project.repository;
 
 import com.example.spring_boot_mvc_project.model.User;
 
-public interface UserRepository  {
+
+public interface UserRepository {
 
     User getUserByUsername(String name);
 

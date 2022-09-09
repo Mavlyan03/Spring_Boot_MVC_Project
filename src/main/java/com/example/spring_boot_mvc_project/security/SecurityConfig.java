@@ -1,5 +1,6 @@
 package com.example.spring_boot_mvc_project.security;
 
+import com.example.spring_boot_mvc_project.service.serviceImpl.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,17 +15,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final UserDetailsService userDetailsService;
 
-    @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
+    @Bean
+    public UserDetailServiceImpl userDetailsService() {
+        return new UserDetailServiceImpl();
     }
-
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setUserDetailsService(userDetailsService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
@@ -48,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/companies/newCompany").hasAuthority("ADMIN")
                 .antMatchers("/companies/update/{id}").hasAuthority("ADMIN")
                 .antMatchers("/companies/delete/{id}").hasAuthority("ADMIN")
-                .antMatchers("/courses/allCourses/{companyId}").hasAnyAuthority("ADMIN","INSTRUCTOR")
+                .antMatchers("/courses/allCourses/{companyId}").hasAnyAuthority("ADMIN","INSTRUCTOR","MANAGER")
                 .antMatchers("/courses/{companyId}/newCourse").hasAuthority("ADMIN")
                 .antMatchers("/courses/{id}/{courseId}/delete").hasAuthority("ADMIN")
                 .antMatchers("/courses/{companyId}/{courseId}/saveAssign").hasAnyAuthority("ADMIN","MANAGER")
@@ -76,8 +75,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-//
                 .permitAll()
+                .defaultSuccessUrl("/companies/allCompanies")
                 .and()
                 .logout().permitAll();
     }
