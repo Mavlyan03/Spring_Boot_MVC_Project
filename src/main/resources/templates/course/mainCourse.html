@@ -39,9 +39,8 @@
     }
 
     .btn-primary:hover {
-        background: mediumseagreen;
+        background: darkgreen;
     }
-
     .button {
         text-align: center;
     }
@@ -105,9 +104,10 @@
     </tbody>
 </table>
 <a  class="button" th:href="@{/courses/{id}/newCourse(id=${companyId})}">
-    <button type="button" class="btn btn-primary btn-sm">Add Course</button>
+    <button type="button" class="btn btn-primary btn-sm" style="background: darkslateblue">Add Course</button>
 </a>
-<a  class="button" th:href="@{/companies/allCompanies}">
+
+<a class="button" th:href="@{/companies/allCompanies}">
     <button type="button" class="btn btn-primary btn-sm">Go back</button>
 </a>
 
